@@ -18,7 +18,7 @@ with open(csvpath) as csvfile:
     maxprof[1] = 0
    
     #Looping through Data
-    for i in range(2,len(rows)):
+    for i in range(1,len(rows)):
         
         months=months+1
         row=rows[i]
@@ -32,17 +32,28 @@ with open(csvpath) as csvfile:
             if int(row[1])-int(rows[i-1][1]) < minprof[1]:  #check if current change in profit/loss is less than minprof change already known
                  minprof[1] = int(row[1])-int(rows[i-1][1]) # Then make minprof to be the current change
                  minprof[0] = row[0]
-            change_profit_loss=change_profit_loss + float(row[1])-float(rows[i-1][1]) 
+            change_profit_loss=change_profit_loss + int(row[1])-int(rows[i-1][1]) 
         
 #Calculating Average and Average Change in profit_loss
 average_change_profit_loss='{0:.2%}'.format(change_profit_loss/months)
 
 #Printing the Outputs
+file1 = open("PyBank/PyBank_result.txt","w") 
 print("Financial Analysis")
+file1.write("Financial Analysis\n")
 print("------------------")
 print("Total Months: " + str(months))
 print("Total: " +"$" +str(profit_loss))       
 print("Average Change: " +"$"+ str(average_change_profit_loss))
 print("Greatest Increase in profit_:" + str(maxprof[0])+" ($" + str(maxprof[1])+")")
 print("Greatest Decrease in loss:" + str(minprof[0])+" ($" + str(minprof[1])+")")
+
+file1.write("------------------\n")
+file1.write("Total Months: " + str(months))
+file1.write("\nTotal: " +"$" +str(profit_loss))       
+file1.write("\nAverage Change: " +"$"+ str(average_change_profit_loss))
+file1.write("\nGreatest Increase in profit_:" + str(maxprof[0])+" ($" + str(maxprof[1])+")")
+file1.write("\nGreatest Decrease in loss:" + str(minprof[0])+" ($" + str(minprof[1])+")")
+
+file1.close
 
